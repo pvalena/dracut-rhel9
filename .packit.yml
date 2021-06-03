@@ -1,0 +1,59 @@
+---
+# This file is part of dracut.
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# vi:ts=2 sw=2 et:
+#
+# Docs: https://packit.dev/docs/
+
+specfile_path: .packit_rpm/dracut.spec
+synced_files:
+  - .packit.yaml
+  - src: .packit_rpm/dracut.spec
+    dest: dracut.spec
+upstream_package_name: dracut
+downstream_package_name: dracut
+upstream_tag_template: "{version}"
+
+actions:
+  post-upstream-clone:
+    # Use the CentOS Stream specfile
+    - "git clone https://gitlab.com/redhat/centos-stream/rpms/dracut .packit_rpm --depth=1"
+    # Drop the "sources" file so rebase-helper doesn't think we're a dist-git$
+    - "rm -fv .packit_rpm/sources"
+<<<<<<< HEAD
+    # Drop all patches (since they're already applied in this repository)
+    - "sed -ri '/^Patch[0-9]+:/d' .packit_rpm/dracut.spec"
+=======
+>>>>>>> f405be28 (wip: ci: reconfigure Packit for EL9)
+
+# Available targets can be listed via `copr-cli list-chroots`
+jobs:
+# Build test
+- job: copr_build
+  trigger: pull_request
+  metadata:
+    targets:
+<<<<<<< HEAD
+      - centos-stream-9-x86_64
+      - centos-stream-9-aarch64
+=======
+      - epel-8-x86_64
+      - epel-8-aarch64
+      # FIXME: change to CentOS 9 once it's available
+      - fedora-34-x86_64
+      - fedora-34-aarch64
+      - fedora-34-s390x
+>>>>>>> f405be28 (wip: ci: reconfigure Packit for EL9)
+
+# Run tests (via testing farm)
+- job: tests
+  trigger: pull_request
+  metadata:
+    targets:
+<<<<<<< HEAD
+      - centos-stream-9-x86_64
+=======
+      # FIXME: change to CentOS 9 once it's available
+      - fedora-34-x86_64
+>>>>>>> f405be28 (wip: ci: reconfigure Packit for EL9)
