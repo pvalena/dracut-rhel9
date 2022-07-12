@@ -8,7 +8,7 @@ on:
             - 'test/container/**'
             - '.github/workflows/container.yml'
     pull_request:
-        branches: [ main ]
+        branches: [ main new-main ]
         paths:
             - 'test/container/**'
             - '.github/workflows/container.yml'
