@@ -6,23 +6,17 @@
 #
 # Docs: https://packit.dev/docs/
 
-specfile_path: .packit_rpm/dracut.spec
+specfile_path: pkgbuild/dracut.spec
 synced_files:
   - .packit.yaml
-  - src: .packit_rpm/dracut.spec
-    dest: dracut.spec
 upstream_package_name: dracut
 downstream_package_name: dracut
 upstream_tag_template: "{version}"
 
 actions:
   post-upstream-clone:
-    # Use the CentOS Stream specfile
-    - "git clone https://gitlab.com/redhat/centos-stream/rpms/dracut .packit_rpm --depth=1"
-    # Drop the "sources" file so rebase-helper doesn't think we're a dist-git$
-    - "rm -fv .packit_rpm/sources"
-    # Drop all patches (since they're already applied in this repository)
-    - "sed -ri '/^Patch[0-9]+:/d' .packit_rpm/dracut.spec"
+    # Use the current specfile
+    - "cp pkgbuild/dracut.spec ."
 
 # Available targets can be listed via `copr-cli list-chroots`
 jobs:
